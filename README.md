@@ -1,6 +1,6 @@
-h2. Stayful Challenge
+# Stayful Challenge
 
-*CSS Inspiration*
+## CSS Inspiration
 
 * http://www.w3.org/TR/css3-flexbox/
 * http://helephant.com/2013/03/29/css3-flexbox-examples/
@@ -12,12 +12,12 @@ h2. Stayful Challenge
 * http://css-tricks.com/snippets/css/media-queries-for-standard-devices/
 * http://css-tricks.com/perfect-full-page-background-image/
 
-*HTML Inspiration*
+## HTML Inspiration
 
 * https://github.com/h5bp/html5-boilerplate/blob/master/index.html (as always)
 * http://webdesign.tutsplus.com/tutorials/htmlcss-tutorials/quick-tip-dont-forget-the-viewport-meta-tag/
 
-*Adaptive Image Inspiration*
+## Adaptive Image Inspiration
 
 * http://tannock.net/2012/03/an-adaptive-image-technique-thinking-out-loud/
 * http://24ways.org/2011/adaptive-images-for-responsive-designs/
@@ -29,16 +29,14 @@ h2. Stayful Challenge
 * http://neilmagee.com/css/css-adaptive-images
 * http://adaptive-images.com/
 * http://caniuse.com/#search=media
+* https://github.com/Modernizr/Modernizr/issues/548
 
-
-*https://github.com/Modernizr/Modernizr/issues/548
-
-*API Design*
+## API Design
 
 * http://net.tutsplus.com/tutorials/other/a-beginners-introduction-to-http-and-rest/
 * http://www.youtube.com/watch?feature=player_embedded&v=P9FXZ8pYxmw#!
 
-*Mobile*
+## Mobile
 
 * http://www.quirksmode.org/mobile/viewports.html
 * http://menacingcloud.com/?c=iPhoneAddressBar
@@ -46,7 +44,7 @@ h2. Stayful Challenge
 * http://www.usabilitypost.com/2012/11/06/optimize-legibility/
 * http://www.javascriptkit.com/dhtmltutors/cssmediaqueries3.shtml
 
-*Images*
+## Images
 
 * 1920x1280 desktop
 * 1136 x 640 iphone 5
