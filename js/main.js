@@ -335,7 +335,8 @@ SF.BackgroundImageLoader = function() {
         var cityFileName;
         
         cityFileName = city + "-" + number + "-" + size + ".jpg";        
-        return "/magicaj/stayful/workspace/images/" + cityFileName;
+        return "images/" + cityFileName;
+        //return "/magicaj/stayful/workspace/images/" + cityFileName;
     }
     
     /*
