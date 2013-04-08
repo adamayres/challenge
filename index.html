@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Stayful Challenge</title>        
+        <link rel="stylesheet" href="css/main.css">
+        <script>
+            /*
+             * Modenizr lite way to allow JS capability checking
+             * in the CSS.
+             */
+            var docElement = document.documentElement;
+            docElement.className = docElement.className.replace("no-js", "js");
+        </script>
+    </head>
+    <body>  
+        <div id="background"></div>        
+        <div id="content" class="content">            
+            <label>
+            <select id="cities">
+                <option value="sf">San Francisco</option>
+                <option value="ny">New York</option>                
+            </select>                      
+            </label>
+        </div>
+        <script type="text/javascript" src="js/main.js"></script>
+    </body>    
+</html>
