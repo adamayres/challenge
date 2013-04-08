@@ -170,7 +170,8 @@ SF.ANIMATION = {
  */
 SF.BackgroundImageLoader = function() {
     var loadedFirstImage, container, activeElement, activeNumber, 
-        activeCity, loadedImages, preloaded, interval;
+        activeCity, loadedImages, preloaded, interval, numberOfImagesPerCity,
+        carouselStarted;
     
     /*
      * Flag to determine if the main image has loaded.
@@ -190,6 +191,11 @@ SF.BackgroundImageLoader = function() {
      * Flag if the preloading of the images has started.
      */
     preloaded = false;
+    
+    /*
+     * Flag if the carousel is started
+     */ 
+    carouselStarted = false;
     
     /*
      * Workaround to make the onload event for images work
@@ -390,22 +396,37 @@ SF.BackgroundImageLoader = function() {
      *
      * @param {Number} numberOfImagesPerGroup - The number of images per city
      */        
-    function startCarousel(numberOfImagesPerCity) {
-        interval = window.setInterval(function() {
-            if (loadedImages[activeCity] !== undefined) {
-                var nextNumber; 
-                
-                if (activeNumber < numberOfImagesPerCity) {
-                    nextNumber = activeNumber + 1;
-                } else {
-                    nextNumber = 1;
+    function startCarousel() {
+        if (carouselStarted === false) {
+            carouselStarted = true;        
+            interval = window.setInterval(function() {
+                if (loadedImages[activeCity] !== undefined) {
+                    var nextNumber; 
+                    
+                    if (activeNumber < numberOfImagesPerCity) {
+                        nextNumber = activeNumber + 1;
+                    } else {
+                        nextNumber = 1;
+                    }
+                    
+                    if (loadedImages[activeCity][nextNumber] !== undefined) {                    
+                        swapActiveElement(loadedImages[activeCity][nextNumber], nextNumber);
+                    }
                 }
-                
-                if (loadedImages[activeCity][nextNumber] !== undefined) {                    
-                    swapActiveElement(loadedImages[activeCity][nextNumber], nextNumber);
-                }
-            }
-        }, 5000);
+            }, 5000);
+        }
+    }
+    
+    /*
+     * Stopes the image carousel 
+     *
+     * @param {Number} numberOfImagesPerGroup - The number of images per city
+     */        
+    function stopCarousel() {
+        if (carouselStarted === true) {
+            carouselStarted = false;        
+            window.clearInterval(interval);   
+        }
     }
     
     /*
@@ -416,9 +437,10 @@ SF.BackgroundImageLoader = function() {
      * @param {Number} numberOfImagesPerCity - The number of images per city
      *
      */ 
-    function init(elementId, imageFromDataId, numberOfImagesPerCity) {
+    function init(elementId, imageFromDataId, numberOfImagesPerCityParam) {
         var image, slow, citiesSelectElement, cityChanged, screenSize, windowInnerWidth, clientWidth, defaultCity, cities;
         
+        numberOfImagesPerCity = numberOfImagesPerCityParam;
         windowInnerWidth = window.innerWidth;
         clientWidth = document.documentElement.clientWidth;
         
@@ -510,7 +532,7 @@ SF.BackgroundImageLoader = function() {
          * and then start up the carousel again.
          */
         SF.EVENT.addEvent(citiesSelectElement, "change", function() {                                    
-            window.clearInterval(interval);
+            stopCarousel();
             window.setTimeout(function() {                
                 var city;
                 
@@ -525,7 +547,7 @@ SF.BackgroundImageLoader = function() {
                 }
                                 
                 cityChanged = true;
-                startCarousel(numberOfImagesPerCity);    
+                startCarousel();    
             }, 2500);  
             
             /*
@@ -537,11 +559,28 @@ SF.BackgroundImageLoader = function() {
             preloadImages(cities, numberOfImagesPerCity, screenSize);
         });
         
-        startCarousel(numberOfImagesPerCity);
+        startCarousel();
+        
+        /*
+         * Prevent carosel from running while the tab is not focused.
+         * This prevents the animations from queuing up and running all
+         * at once when focus is regained.
+         *
+         * TODO: Use the standard way to determine when focus is changed:
+         * http://www.w3.org/TR/2011/WD-page-visibility-20110602/ 
+         */
+        
+        SF.EVENT.addEvent(window, "pagehide", stopCarousel);
+        SF.EVENT.addEvent(window, "blur", stopCarousel);
+        SF.EVENT.addEvent(window, "focusout", startCarousel);
+                
+        SF.EVENT.addEvent(window, "pageshow", startCarousel);
+        SF.EVENT.addEvent(window, "focus", startCarousel);
+        SF.EVENT.addEvent(window, "focusin", startCarousel);        
     }
         
-    return function(elementId, imageFromDataId, numberOfImagesPerCity) {        
-        init(elementId, imageFromDataId, numberOfImagesPerCity);
+    return function(elementId, imageFromDataId, numberOfImagesPerCityParam) {        
+        init(elementId, imageFromDataId, numberOfImagesPerCityParam);
     };
 }();
 
